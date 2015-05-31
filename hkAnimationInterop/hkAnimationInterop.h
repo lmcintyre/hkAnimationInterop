@@ -14,26 +14,31 @@
 
 class AnimationContainer;
 class Animation;
+class Skeleton;
 
 extern "C" {
     HKANIMATIONINTEROP_API void initHkInterop(void);
     HKANIMATIONINTEROP_API void quitHkInterop(void);
 
-    // AnimationContainer
-    HKANIMATIONINTEROP_API AnimationContainer* loadAnimationContainer(unsigned char* rigData, int rigSize, unsigned char* animationData, int animationSize);
-    HKANIMATIONINTEROP_API void unloadAnimationContainer(AnimationContainer* ptr);
+    // Skeleton
+    HKANIMATIONINTEROP_API Skeleton* loadSkeleton(unsigned char* rigData, int rigSize);
+    HKANIMATIONINTEROP_API void unloadSkeleton(Skeleton* skeleton);
 
-    HKANIMATIONINTEROP_API int getNumBones(AnimationContainer* ptr);
-    HKANIMATIONINTEROP_API int getNumAnimations(AnimationContainer* ptr);
-    HKANIMATIONINTEROP_API Animation* getAnimation(AnimationContainer* ptr, int index);
-    HKANIMATIONINTEROP_API int getBoneNames(AnimationContainer* ptr, char** output);
-    HKANIMATIONINTEROP_API int getReferencePose(AnimationContainer* ptr, Transform* output);
-    HKANIMATIONINTEROP_API int getParentIndices(AnimationContainer* ptr, int output []);
+    HKANIMATIONINTEROP_API int getNumBones(Skeleton* skeleton);
+    HKANIMATIONINTEROP_API int getBoneNames(Skeleton* skeleton, char** output);
+    HKANIMATIONINTEROP_API int getReferencePose(Skeleton* skeleton, Transform* output);
+    HKANIMATIONINTEROP_API int getParentIndices(Skeleton* skeleton, int output []);
+
+    // AnimationContainer
+    HKANIMATIONINTEROP_API AnimationContainer* loadAnimationContainer(Skeleton* skeleton, unsigned char* animationData, int animationSize);
+    HKANIMATIONINTEROP_API void unloadAnimationContainer(AnimationContainer* container);
+
+    HKANIMATIONINTEROP_API int getNumAnimations(AnimationContainer* container);
+    HKANIMATIONINTEROP_API Animation* getAnimation(AnimationContainer* container, int index);
 
     // Animation
-    HKANIMATIONINTEROP_API float getDuration(Animation* ptr);
-    HKANIMATIONINTEROP_API float getFrameDuration(Animation* ptr);
-    HKANIMATIONINTEROP_API int getNumFrames(Animation* ptr);
-    HKANIMATIONINTEROP_API int getTransforms(Animation* ptr, float timestamp, Transform* output);
-    HKANIMATIONINTEROP_API int getBoneIndexMap(Animation* ptr, int output[], int max);
+    HKANIMATIONINTEROP_API float getDuration(Animation* animation);
+    HKANIMATIONINTEROP_API float getFrameDuration(Animation* animation);
+    HKANIMATIONINTEROP_API int getNumFrames(Animation* animation);
+    HKANIMATIONINTEROP_API int getPose(Animation* animation, float timestamp, Transform* output);
 }

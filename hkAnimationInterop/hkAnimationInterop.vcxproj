@@ -93,6 +93,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationContainer.h" />
     <ClInclude Include="hkAnimationInterop.h" />
+    <ClInclude Include="Skeleton.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Transform.h" />
@@ -109,7 +110,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="hkAnimationInterop.cpp" />
+    <ClCompile Include="hkAnimationInterop.Animation.cpp" />
+    <ClCompile Include="hkAnimationInterop.AnimationContainer.cpp" />
+    <ClCompile Include="hkAnimationInterop.Havok.cpp" />
+    <ClCompile Include="hkAnimationInterop.Skeleton.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

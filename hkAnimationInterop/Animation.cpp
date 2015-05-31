@@ -4,6 +4,7 @@
 
 #include "Animation.h"
 #include "AnimationContainer.h"
+#include "Skeleton.h"
 
 #include <Animation/Animation/hkaAnimation.h>
 #include <Animation/Animation/Playback/hkaAnimatedSkeleton.h>
@@ -18,7 +19,7 @@ Animation::Animation(AnimationContainer* container, hkaAnimationBinding* binding
     this->m_Animation = binding->m_animation;
 
     this->m_AnimationControl = new hkaDefaultAnimationControl(binding);
-    this->m_AnimatedSkeleton = new hkaAnimatedSkeleton(container->getSkeleton());
+    this->m_AnimatedSkeleton = new hkaAnimatedSkeleton(container->getSkeleton()->getHavokSkeleton());
     this->m_AnimatedSkeleton->addAnimationControl(this->m_AnimationControl);
 }
 
@@ -34,7 +35,7 @@ const int Animation::getNumFrames() {
     return this->m_Animation->getNumOriginalFrames();
 }
 
-Transform* Animation::getTransforms(const float time)
+Transform* Animation::getPose(const float time, int &count)
 {
     this->m_AnimationControl->setLocalTime(time);
 
@@ -43,9 +44,9 @@ Transform* Animation::getTransforms(const float time)
 
     const hkQsTransform *transforms = pose.getSyncedPoseModelSpace().begin();
     
-    int num = this->m_Container->getNumBones();
-    Transform *result = new Transform[num];
-    for (int i = 0; i < num; ++i) {
+    count = this->m_AnimatedSkeleton->getSkeleton()->m_bones.getSize();
+    Transform *result = new Transform[count];
+    for (int i = 0; i < count; ++i) {
         hkQsTransform currentIn = transforms[i];
         hkVector4f translation = currentIn.getTranslation();
         hkVector4f scale = currentIn.getScale();
@@ -74,14 +75,4 @@ Transform* Animation::getTransforms(const float time)
     return result;
 }
 
-int* Animation::getBoneIndexMap(int &count)
-{
-    count = this->m_Binding->m_transformTrackToBoneIndices.getSize();
-
-    int *map = (int*) malloc(count * sizeof(int));
-    for (int i = 0; i < count; ++i)
-        map[i] = this->m_Binding->m_transformTrackToBoneIndices[i];
-
-    return map;
-}
 

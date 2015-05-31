@@ -14,7 +14,7 @@
 
 #include <Animation/Animation/Rig/hkaSkeleton.h>
 
-
+/*
 void PlatformInit();
 void PlatformFileSystemInit();
 
@@ -46,7 +46,11 @@ extern HKANIMATIONINTEROP_API AnimationContainer* loadAnimationContainer(unsigne
     return container;
 }
 
-extern HKANIMATIONINTEROP_API void unloadAnimationContainer(AnimationContainer* container)
+HKANIMATIONINTEROP_API AnimationContainer * loadAnimationContainer(Skeleton * skeleton, unsigned char * animationData, int animationSize)
+{
+    return nullptr;
+}
+HKANIMATIONINTEROP_API void unloadAnimationContainer(AnimationContainer* container)
 {
     delete container;
 }
@@ -65,50 +69,6 @@ extern HKANIMATIONINTEROP_API int getNumAnimations(AnimationContainer* container
 extern HKANIMATIONINTEROP_API Animation* getAnimation(AnimationContainer* container, int index)
 {
     return container->getAnimation(index);
-}
-
-HKANIMATIONINTEROP_API int getBoneNames(AnimationContainer * container, char** output)
-{
-    int count = container->getNumBones();
-
-    std::vector<const char*> boneNames = container->getBoneNames();
-    for (int i = 0; i < count; ++i) {        
-        //output[i] = _strdup(boneNames[i]);
-        STRSAFE_LPCSTR name = boneNames[i];
-        size_t len;
-
-        StringCchLengthA(name, STRSAFE_MAX_CCH, &len);
-
-        len += 1;
-
-        output[i] = (STRSAFE_LPSTR) CoTaskMemAlloc(len);
-        StringCchCopyA(output[i], len, name);
-    }
-    
-
-    return count;
-}
-
-HKANIMATIONINTEROP_API int getReferencePose(AnimationContainer * container, Transform * output)
-{
-    int count = container->getNumBones();
-
-    Transform* transforms = container->getReferencePose();
-    for (int i = 0; i < count; ++i)
-        output[i] = transforms[i];
-
-    return count;
-}
-
-HKANIMATIONINTEROP_API int getParentIndices(AnimationContainer * container, int output [])
-{
-    hkaSkeleton *skele = container->getSkeleton();
-    const int count = skele->m_parentIndices.getSize();
-    hkInt16* src = skele->m_parentIndices.begin();
-    for (int i = 0; i < count; ++i)
-        output[i] = src[i];
-
-    return count;
 }
 
 extern HKANIMATIONINTEROP_API float getDuration(Animation* animation)
@@ -169,3 +129,5 @@ HKANIMATIONINTEROP_API int getBoneIndexMap(Animation * ptr, int output[], int ma
 // Platform specific initialization
 
 #include <Common/Base/System/Init/PlatformInit.cxx>
+
+*/

@@ -8,6 +8,7 @@ class hkaAnimatedSkeleton;
 class hkaDefaultAnimationControl;
 
 class AnimationContainer;
+class Skeleton;
 
 class Animation
 {
@@ -23,8 +24,7 @@ public:
     hkaAnimationBinding* getBinding() { return this->m_Binding; }
     AnimationContainer* getContainer() { return this->m_Container; }
 
-    Transform* getTransforms(const float time);
-    int* getBoneIndexMap(int &count);
+    Transform* getPose(const float time, int &count);
 private:
     hkaAnimation* m_Animation;
     hkaAnimationBinding* m_Binding;
